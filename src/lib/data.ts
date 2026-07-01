@@ -6,20 +6,25 @@ import {
   Briefcase,
   Building2,
   CalendarClock,
+  ClipboardCheck,
   Code2,
+  Compass,
   Cpu,
   Database,
+  Factory,
   FileText,
   FlaskConical,
   Globe2,
   GraduationCap,
   Hammer,
   HeartHandshake,
+  Landmark,
   Layers,
   Mail,
   MapPin,
   Mic2,
   Network,
+  PenTool,
   Phone,
   Presentation,
   Radio,
@@ -27,8 +32,11 @@ import {
   Rocket,
   Route,
   School,
+  Search,
   ShieldCheck,
+  ShoppingCart,
   Sparkles,
+  Stethoscope,
   Target,
   TrendingUp,
   Trophy,
@@ -36,6 +44,7 @@ import {
   Users,
   Wand2,
   Workflow,
+  Wrench,
 } from "lucide-react";
 import type {
   AudienceSegment,
@@ -48,7 +57,10 @@ import type {
   FlagshipProgram,
   FooterLinkGroup,
   IconLabel,
+  IndustryFocus,
   NavLink,
+  PolicySection,
+  ProcessStep,
   ProgramCard,
   SocialLink,
   StatItem,
@@ -70,28 +82,8 @@ export const navLinks: NavLink[] = [
   { label: "About", href: "#about" },
   { label: "AI Academy", href: "/academy" },
   { label: "AI Products", href: "/products" },
-  {
-    label: "AI Consulting",
-    href: "#consulting",
-    children: [
-      {
-        label: "AI Strategy & Consulting",
-        href: "#consulting",
-        description: "Roadmaps, opportunity mapping, and adoption planning.",
-      },
-      {
-        label: "AI Engineering & MLOps",
-        href: "#consulting",
-        description: "Scalable, secure, cloud-ready ML systems.",
-      },
-      {
-        label: "AI Productization & Innovation",
-        href: "#consulting",
-        description: "From validated concept to deployed product.",
-      },
-    ],
-  },
-  { label: "Policy", href: "#" },
+  { label: "AI Consulting", href: "/consulting" },
+  { label: "Policy", href: "/policy" },
   { label: "Blog", href: "#" },
   { label: "Contact", href: "#contact" },
 ];
@@ -275,8 +267,8 @@ export const footerLinkGroups: FooterLinkGroup[] = [
   {
     title: "Legal",
     links: [
-      { label: "Terms & Conditions", href: "#" },
-      { label: "Privacy Policy", href: "#" },
+      { label: "Terms & Conditions", href: "/policy" },
+      { label: "Privacy Policy", href: "/policy#privacy-data-protection" },
     ],
   },
 ];
@@ -710,4 +702,547 @@ export const productsFinalCta = {
     "Discover intelligent products that empower careers, accelerate learning, and transform businesses through practical Artificial Intelligence.",
   primaryCta: { label: "Explore Dhiti.ai", href: "#dhiti" },
   secondaryCta: { label: "Contact Us", href: "/#contact" },
+};
+
+export const consultingPageHero = {
+  title: "Accelerating Business Transformation Through Artificial Intelligence",
+  paragraphs: [
+    "Artificial Intelligence is reshaping industries at an unprecedented pace. At TheMindRise.AI, we help organizations unlock the full potential of AI through strategy, consulting, implementation, corporate capability building, and industry-specific solutions.",
+    "Whether you are beginning your AI journey or scaling enterprise-wide AI initiatives, we partner with you to transform ideas into measurable business outcomes.",
+  ],
+  primaryCta: { label: "Book a Consultation", href: "/#contact" },
+  secondaryCta: { label: "Explore Our Services", href: "#services" },
+};
+
+export const consultingPageAboutCopy = {
+  title: "About Our Consulting Services",
+  paragraphs: [
+    "Artificial Intelligence is no longer a future initiative — it is a business imperative.",
+    "Organizations across every industry are exploring how AI can improve efficiency, enhance customer experiences, automate operations, accelerate decision-making, and unlock new business opportunities.",
+    "However, successful AI transformation requires more than technology. It demands the right strategy, strong governance, domain expertise, skilled teams, and practical implementation.",
+    "At TheMindRise.AI, we bridge the gap between AI ambition and business execution by helping organizations adopt AI with confidence.",
+  ],
+};
+
+export const consultingPageServices: EcosystemPillar[] = [
+  {
+    id: "strategy",
+    icon: Compass,
+    title: "AI Strategy & Roadmap",
+    description: "Develop a clear AI vision aligned with your business objectives.",
+    examples: [
+      "AI Opportunity Assessment",
+      "AI Readiness Evaluation",
+      "AI Strategy Roadmap",
+      "Business Use Case Identification",
+      "AI Governance Framework",
+      "AI Adoption Planning",
+    ],
+  },
+  {
+    id: "generative-ai",
+    icon: Sparkles,
+    title: "Generative AI Solutions",
+    description:
+      "Leverage Large Language Models (LLMs) and Generative AI to enhance productivity, automate workflows, and improve customer engagement.",
+    examples: [
+      "ChatGPT Integration",
+      "Enterprise Knowledge Assistants",
+      "Document Intelligence",
+      "AI Copilots",
+      "Prompt Engineering",
+      "Workflow Automation",
+    ],
+  },
+  {
+    id: "agentic-ai",
+    icon: Bot,
+    title: "Agentic AI Solutions",
+    description:
+      "Design and implement intelligent AI agents capable of reasoning, planning, and executing complex business tasks.",
+    examples: [
+      "AI Agent Development",
+      "Multi-Agent Systems",
+      "Workflow Automation",
+      "MCP-Based Architectures",
+      "Autonomous Business Processes",
+      "AI Orchestration",
+    ],
+  },
+  {
+    id: "data-science",
+    icon: Database,
+    title: "Data Science & Machine Learning",
+    description:
+      "Transform enterprise data into actionable insights through advanced analytics and predictive intelligence.",
+    examples: [
+      "Predictive Analytics",
+      "Forecasting Models",
+      "Customer Segmentation",
+      "Recommendation Systems",
+      "NLP Solutions",
+      "Computer Vision",
+      "AI Model Development",
+    ],
+  },
+  {
+    id: "product-development",
+    icon: Rocket,
+    title: "AI Product Development",
+    description: "Build scalable AI-powered products from concept to deployment.",
+    examples: [
+      "AI Product Strategy",
+      "MVP Development",
+      "AI Application Development",
+      "LLM Integration",
+      "API Integration",
+      "AI Deployment",
+    ],
+  },
+  {
+    id: "corporate-training",
+    icon: GraduationCap,
+    title: "Corporate AI Training",
+    description:
+      "Enable your workforce with practical AI skills through customized corporate learning programs.",
+    examples: [
+      "AI for Business Leaders",
+      "AI for Managers",
+      "Generative AI for Employees",
+      "Agentic AI Bootcamps",
+      "Prompt Engineering",
+      "AI Productivity Workshops",
+      "Customized Enterprise Learning",
+    ],
+  },
+];
+
+export const consultingPageIndustries: IndustryFocus[] = [
+  {
+    icon: Stethoscope,
+    title: "Healthcare & Pharma",
+    items: [
+      "Clinical analytics",
+      "Commercial analytics",
+      "Market Access",
+      "Real World Evidence",
+      "Medical Affairs",
+      "Patient analytics",
+    ],
+  },
+  {
+    icon: Landmark,
+    title: "Banking & Financial Services",
+    items: [
+      "Fraud Detection",
+      "Risk Analytics",
+      "Customer Intelligence",
+      "Automation",
+      "Financial Forecasting",
+    ],
+  },
+  {
+    icon: ShoppingCart,
+    title: "Retail & E-Commerce",
+    items: [
+      "Demand Forecasting",
+      "Recommendation Engines",
+      "Customer Segmentation",
+      "Inventory Optimization",
+      "Marketing Analytics",
+    ],
+  },
+  {
+    icon: Factory,
+    title: "Manufacturing",
+    items: [
+      "Predictive Maintenance",
+      "Quality Inspection",
+      "Supply Chain Analytics",
+      "Operational Intelligence",
+    ],
+  },
+  {
+    icon: School,
+    title: "Education",
+    items: [
+      "AI Learning Platforms",
+      "Student Analytics",
+      "Adaptive Learning",
+      "Faculty Enablement",
+      "Career Guidance",
+    ],
+  },
+  {
+    icon: Cpu,
+    title: "Technology",
+    items: [
+      "AI Product Development",
+      "LLM Applications",
+      "Enterprise Automation",
+      "Digital Transformation",
+    ],
+  },
+];
+
+export const consultingPageApproach: ProcessStep[] = [
+  {
+    step: 1,
+    icon: Search,
+    title: "Discover",
+    description: "Understand your business, challenges, and strategic objectives.",
+  },
+  {
+    step: 2,
+    icon: ClipboardCheck,
+    title: "Assess",
+    description:
+      "Evaluate AI readiness, available data, technology landscape, and opportunities.",
+  },
+  {
+    step: 3,
+    icon: PenTool,
+    title: "Design",
+    description:
+      "Create practical AI roadmaps, solution architecture, and implementation strategy.",
+  },
+  {
+    step: 4,
+    icon: Wrench,
+    title: "Build",
+    description: "Develop and deploy scalable AI solutions aligned with business goals.",
+  },
+  {
+    step: 5,
+    icon: Users,
+    title: "Enable",
+    description: "Train teams, establish governance, and drive organizational adoption.",
+  },
+  {
+    step: 6,
+    icon: TrendingUp,
+    title: "Scale",
+    description:
+      "Continuously improve, optimize, and expand AI capabilities across the organization.",
+  },
+];
+
+export const consultingPageWhyPartner: FeatureItem[] = [
+  {
+    icon: Award,
+    title: "Enterprise Experience",
+    description:
+      "More than two decades of experience delivering analytics, AI, and digital transformation initiatives across global organizations including TCS, Oracle, GE, and Novartis.",
+  },
+  {
+    icon: Target,
+    title: "Business-First Approach",
+    description:
+      "We focus on measurable business outcomes rather than technology for technology's sake.",
+  },
+  {
+    icon: BrainCircuit,
+    title: "Practical AI Expertise",
+    description:
+      "From Data Science to Generative AI and Agentic AI, our solutions are grounded in real-world implementation.",
+  },
+  {
+    icon: Layers,
+    title: "Industry Knowledge",
+    description:
+      "Deep understanding of Healthcare, Pharma, Banking, Retail, Manufacturing, Education, and Technology sectors.",
+  },
+  {
+    icon: Network,
+    title: "End-to-End Partnership",
+    description: "From strategy and consulting to implementation, training, and ongoing support.",
+  },
+];
+
+export const consultingPageWhyChoose: string[] = [
+  "AI Strategy & Advisory",
+  "Enterprise AI Consulting",
+  "AI Product Development",
+  "Generative AI Solutions",
+  "Agentic AI Solutions",
+  "Corporate AI Training",
+  "Industry-Specific Expertise",
+  "Practical Business Outcomes",
+];
+
+export const consultingPageCta = {
+  intro:
+    "Artificial Intelligence is transforming every industry — but successful transformation begins with the right partner. Whether you're exploring AI opportunities, modernizing business operations, training your workforce, or building intelligent products, TheMindRise.AI is ready to help you turn vision into reality.",
+  title: "Ready to Accelerate Your AI Journey?",
+  subtitle: "Let's discuss how Artificial Intelligence can create measurable value for your organization.",
+  primaryCta: { label: "Schedule a Consultation", href: "/#contact" },
+  secondaryCta: { label: "Contact Our Team", href: "/#contact" },
+};
+
+export const policyPageIntro = {
+  title: "Business Policies",
+  effectiveDate: "Effective Date: July 2026",
+  paragraphs: [
+    "Welcome to TheMindRise.AI.",
+    "Our goal is to provide high-quality learning experiences, AI products, and consulting services while maintaining transparency, fairness, and trust with our learners, clients, and partners.",
+    "The following policies govern the use of our services.",
+  ],
+};
+
+export const policySections: PolicySection[] = [
+  {
+    id: "training-learning",
+    title: "1. Training & Learning Policy",
+    blocks: [
+      { type: "paragraph", text: "TheMindRise.AI offers both:" },
+      {
+        type: "list",
+        items: ["Live Instructor-Led Bootcamps", "Self-Paced Online Courses"],
+      },
+      {
+        type: "paragraph",
+        text: "Course content, schedules, instructors, and learning materials may be updated periodically to reflect the latest advancements in Artificial Intelligence.",
+      },
+      {
+        type: "paragraph",
+        text: "Participants are expected to attend sessions professionally and use learning materials solely for personal educational purposes.",
+      },
+    ],
+  },
+  {
+    id: "registration",
+    title: "2. Registration Policy",
+    blocks: [
+      { type: "paragraph", text: "Enrollment is confirmed only after successful payment." },
+      {
+        type: "paragraph",
+        text: "Participants will receive access instructions via their registered email.",
+      },
+      {
+        type: "paragraph",
+        text: "Please ensure that your contact information is accurate during registration.",
+      },
+    ],
+  },
+  {
+    id: "payment",
+    title: "3. Payment Policy",
+    blocks: [
+      { type: "paragraph", text: "All payments are processed through secure payment gateways." },
+      {
+        type: "paragraph",
+        text: "Prices displayed on the website are subject to change without prior notice.",
+      },
+      { type: "paragraph", text: "Applicable taxes will be charged as per local regulations." },
+    ],
+  },
+  {
+    id: "refund",
+    title: "4. Refund Policy",
+    blocks: [
+      { type: "subheading", text: "Live Bootcamps" },
+      {
+        type: "paragraph",
+        text: "Refund requests made at least 7 days before the scheduled start date are eligible for a full refund.",
+      },
+      {
+        type: "paragraph",
+        text: "Refund requests made within 7 days of the bootcamp may not be eligible for a refund due to resource planning and seat allocation.",
+      },
+      {
+        type: "paragraph",
+        text: "If TheMindRise.AI cancels or reschedules a program, participants may choose either:",
+      },
+      { type: "list", items: ["A full refund, or", "Transfer to a future batch."] },
+      { type: "subheading", text: "Self-Paced Courses" },
+      {
+        type: "paragraph",
+        text: "Because learners receive immediate access to digital content, self-paced course purchases are generally non-refundable.",
+      },
+      {
+        type: "paragraph",
+        text: "However, exceptional cases may be reviewed at the sole discretion of TheMindRise.AI.",
+      },
+    ],
+  },
+  {
+    id: "course-access",
+    title: "5. Course Access Policy",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Self-paced courses include access as specified on the course page.",
+      },
+      {
+        type: "paragraph",
+        text: "Access duration, downloadable resources, certificates, and updates may vary depending on the course.",
+      },
+    ],
+  },
+  {
+    id: "certification",
+    title: "6. Certification Policy",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Certificates are issued only after successfully meeting the completion requirements specified for each course or program.",
+      },
+      { type: "paragraph", text: "Completion criteria may include:" },
+      {
+        type: "list",
+        items: ["Watching course content", "Assignments", "Quizzes", "Projects", "Assessments"],
+      },
+    ],
+  },
+  {
+    id: "intellectual-property",
+    title: "7. Intellectual Property",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "All course content, presentations, videos, code, templates, assessments, documents, and learning materials are the intellectual property of TheMindRise.AI.",
+      },
+      {
+        type: "paragraph",
+        text: "Participants may not reproduce, distribute, sell, record, or share any content without prior written permission.",
+      },
+      {
+        type: "paragraph",
+        text: "Unauthorized distribution may result in termination of access and legal action where applicable.",
+      },
+    ],
+  },
+  {
+    id: "code-of-conduct",
+    title: "8. Code of Conduct",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "We are committed to maintaining a respectful and professional learning environment.",
+      },
+      { type: "paragraph", text: "Participants are expected to:" },
+      {
+        type: "list",
+        items: [
+          "Respect instructors and fellow learners.",
+          "Avoid abusive, discriminatory, or inappropriate behavior.",
+          "Refrain from disrupting live sessions or online communities.",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "Violation of these standards may result in suspension or removal without refund.",
+      },
+    ],
+  },
+  {
+    id: "ai-products",
+    title: "9. AI Products Policy",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "AI-powered products provided by TheMindRise.AI, including Dhiti.ai and future AI applications, are designed to assist users in making informed decisions.",
+      },
+      {
+        type: "paragraph",
+        text: "Recommendations generated by AI should be considered as guidance and not as guarantees of career outcomes, employment, admissions, or business success.",
+      },
+      { type: "paragraph", text: "Users remain responsible for their own decisions." },
+    ],
+  },
+  {
+    id: "consulting-services",
+    title: "10. Consulting Services Policy",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Consulting engagements are governed by mutually agreed project proposals, statements of work (SOW), or service agreements.",
+      },
+      {
+        type: "paragraph",
+        text: "Project timelines, deliverables, pricing, confidentiality, and intellectual property terms will be defined separately for each engagement.",
+      },
+    ],
+  },
+  {
+    id: "privacy-data-protection",
+    title: "11. Privacy & Data Protection",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "We value your privacy and are committed to protecting your personal information.",
+      },
+      {
+        type: "paragraph",
+        text: "Personal data is collected only for legitimate business purposes such as:",
+      },
+      {
+        type: "list",
+        items: [
+          "Course registration",
+          "Customer support",
+          "Payment processing",
+          "Learning progress",
+          "Product improvements",
+          "Communication regarding our services",
+        ],
+      },
+      { type: "paragraph", text: "We do not sell personal information to third parties." },
+      {
+        type: "paragraph",
+        text: "For more details, please refer to our Privacy Policy.",
+      },
+    ],
+  },
+  {
+    id: "website-usage",
+    title: "12. Website Usage",
+    blocks: [
+      { type: "paragraph", text: "Users agree not to:" },
+      {
+        type: "list",
+        items: [
+          "Attempt unauthorized access to our systems.",
+          "Upload malicious software.",
+          "Misuse website functionality.",
+          "Copy or scrape website content without permission.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "limitation-of-liability",
+    title: "13. Limitation of Liability",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "While we strive to provide accurate, high-quality educational content and AI solutions, TheMindRise.AI does not guarantee specific employment outcomes, salary increases, business performance, or project success.",
+      },
+      {
+        type: "paragraph",
+        text: "Our services are intended to support learning, decision-making, and professional development.",
+      },
+    ],
+  },
+  {
+    id: "updates",
+    title: "14. Updates to Policies",
+    blocks: [
+      {
+        type: "paragraph",
+        text: "TheMindRise.AI reserves the right to update these policies at any time.",
+      },
+      { type: "paragraph", text: "The latest version will always be available on our website." },
+    ],
+  },
+];
+
+export const policyContact = {
+  title: "Contact Us",
+  paragraph: "For questions regarding these policies, please contact us.",
+  companyName: "TheMindRise.AI",
+  email: "support@themindrise.ai",
+  website: "www.themindrise.ai",
+  thankYou:
+    "Thank you for choosing TheMindRise.AI as your partner in learning, innovation, and AI transformation.",
 };

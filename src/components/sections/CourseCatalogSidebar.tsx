@@ -26,7 +26,7 @@ export function CourseCatalogMobileTabs({ categories }: CourseCatalogNavProps) {
 
 export function CourseCatalogSidebar({ categories }: CourseCatalogNavProps) {
   return (
-    <aside className="hidden self-start lg:block">
+    <aside className="hidden lg:mt-16 lg:block">
       <nav
         aria-label="Course categories"
         className="sticky top-24 flex flex-col gap-1 self-start rounded-2xl border border-mist bg-cloud p-2 shadow-sm"

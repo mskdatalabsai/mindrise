@@ -112,6 +112,30 @@ export interface CourseCatalogCategory {
   items: CourseCatalogItem[];
 }
 
+export interface IndustryFocus {
+  icon: LucideIcon;
+  title: string;
+  items: string[];
+}
+
+export interface ProcessStep {
+  step: number;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+export type PolicyBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "subheading"; text: string }
+  | { type: "list"; items: string[] };
+
+export interface PolicySection {
+  id: string;
+  title: string;
+  blocks: PolicyBlock[];
+}
+
 export type ContactFormState =
   | { status: "idle" }
   | { status: "submitting" }
