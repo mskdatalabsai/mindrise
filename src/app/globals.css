@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------
+   Design tokens
+   TheMindRise.ai runs on a fixed dark/light brand system (not a
+   user-togglable color-scheme), so tokens are defined directly rather
+   than following prefers-color-scheme.
+------------------------------------------------------------------------ */
+:root {
+  /* Dark surfaces */
+  --color-ink: #05060b;
+  --color-midnight: #0a0d18;
+  --color-panel-solid: #121628;
+  --color-hairline: #242b42;
+
+  /* Light surfaces */
+  --color-frost: #f7f8fc;
+  --color-cloud: #ffffff;
+  --color-mist: #e7e9f2;
+
+  /* Text */
+  --color-fog-100: #f5f6fa;
+  --color-fog-400: #98a1b8;
+  --color-slate-900: #10131f;
+  --color-slate-500: #5b6478;
+
+  /* Brand gradient stops */
+  --color-brand-blue: #4f6ef7;
+  --color-brand-violet: #8b5cf6;
+  --color-brand-teal: #1fd1b0;
+  --color-brand-cyan: #22d3ee;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-midnight: var(--color-midnight);
+  --color-panel-solid: var(--color-panel-solid);
+  --color-hairline: var(--color-hairline);
+
+  --color-frost: var(--color-frost);
+  --color-cloud: var(--color-cloud);
+  --color-mist: var(--color-mist);
+
+  --color-fog-100: var(--color-fog-100);
+  --color-fog-400: var(--color-fog-400);
+  --color-slate-900: var(--color-slate-900);
+  --color-slate-500: var(--color-slate-500);
+
+  --color-brand-blue: var(--color-brand-blue);
+  --color-brand-violet: var(--color-brand-violet);
+  --color-brand-teal: var(--color-brand-teal);
+  --color-brand-cyan: var(--color-brand-cyan);
+
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-float-slower: float 13s ease-in-out infinite;
+  --animate-fade-in-up: fade-in-up 0.7s ease-out both;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-midnight);
+  color: var(--color-fog-100);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-brand-teal);
+  color: var(--color-ink);
+}
+
+/* Slim, brand-tinted scrollbar (WebKit) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-hairline);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-blue);
+}
+
+/* Consistent, visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--color-brand-teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Reusable gradient-text utility */
+.text-gradient-cool {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-brand-blue),
+    var(--color-brand-cyan)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-brand {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-brand-blue),
+    var(--color-brand-violet)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Faint technical grid, used behind the hero only */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(245, 246, 250, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 246, 250, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
