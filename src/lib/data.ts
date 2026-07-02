@@ -85,7 +85,7 @@ export const navLinks: NavLink[] = [
   { label: "AI Consulting", href: "/consulting" },
   { label: "Policy", href: "/policy" },
   { label: "Blog", href: "#" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const heroCertification = {
@@ -261,7 +261,7 @@ export const footerLinkGroups: FooterLinkGroup[] = [
       { label: "About Us", href: "#about" },
       { label: "Training", href: "#programs" },
       { label: "Consulting", href: "#consulting" },
-      { label: "Contact", href: "#contact" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   {
@@ -272,6 +272,14 @@ export const footerLinkGroups: FooterLinkGroup[] = [
     ],
   },
 ];
+
+export const contactPageHero = {
+  title: "Let's Start a Conversation",
+  paragraphs: [
+    "Have a question about our courses, need a consultation for your business, or want to explore a partnership? We would love to hear from you.",
+    "Reach out through the details below or send us a message — our team typically responds within one business day.",
+  ],
+};
 
 export const socialLinks: SocialLink[] = [
   { label: "Facebook", href: "#" },

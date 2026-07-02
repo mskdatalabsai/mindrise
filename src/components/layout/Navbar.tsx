@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/Button";
 import { navLinks, siteConfig } from "@/lib/data";
 
 export function Navbar() {
@@ -68,12 +67,6 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden lg:block">
-          <Button href="#courses" size="sm">
-            Join Bootcamp
-          </Button>
-        </div>
-
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
@@ -119,9 +112,6 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <Button href="#courses" className="mt-5 w-full" onClick={() => setIsOpen(false)}>
-            Join Bootcamp
-          </Button>
         </div>
       ) : null}
     </header>
