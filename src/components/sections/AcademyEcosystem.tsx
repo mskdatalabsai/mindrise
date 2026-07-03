@@ -1,48 +1,184 @@
+"use client";
+
+import { useState } from "react";
+import { Clock, Flame, ImagePlay } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
+import { cn } from "@/lib/utils";
 import { academyEcosystem } from "@/lib/data";
+import type { CourseCatalogItem } from "@/types";
 
-export function AcademyEcosystem() {
+interface EcosystemCourseCardProps {
+  item: CourseCatalogItem;
+  badge?: string;
+  onViewDetails: (item: CourseCatalogItem) => void;
+}
+
+function EcosystemCourseCard({ item, badge, onViewDetails }: EcosystemCourseCardProps) {
   return (
-    <section className="bg-frost py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          tone="light"
-          title="Our Learning Ecosystem"
-          subtitle="The Academy is built around four learning experiences."
-        />
+    <div className="overflow-hidden rounded-2xl border border-mist bg-cloud shadow-sm transition-shadow hover:shadow-lg">
+      <div className="relative flex aspect-video flex-col items-center justify-center gap-1.5 border-b border-dashed border-mist bg-frost">
+        <ImagePlay className="h-7 w-7 text-slate-400" strokeWidth={1.5} aria-hidden />
+        <span className="text-xs font-medium text-slate-400">Image / video coming soon</span>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
-          {academyEcosystem.map(({ id, icon: Icon, title, description, examples }) => (
-            <div
-              key={title}
-              id={id}
-              className="flex flex-col rounded-2xl border border-mist bg-cloud p-7 shadow-sm"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-blue/10">
-                <Icon className="h-6 w-6 text-brand-blue" strokeWidth={1.75} aria-hidden />
-              </div>
-              <h3 className="mt-5 font-display text-lg font-bold text-slate-900">
-                {title}
-              </h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-slate-500">
-                {description}
-              </p>
-              {examples.length > 0 ? (
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {examples.map((example) => (
-                    <span
-                      key={example}
-                      className="rounded-full bg-brand-teal/10 px-2.5 py-1 text-xs font-medium text-brand-teal"
-                    >
-                      {example}
-                    </span>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          ))}
+        {badge ? (
+          <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+            <span className="rounded-full bg-brand-teal/10 px-2.5 py-1 text-xs font-semibold text-brand-teal">
+              {badge}
+            </span>
+          </div>
+        ) : null}
+      </div>
+
+      <div className="p-4">
+        <h4 className="font-display text-sm font-bold leading-snug text-slate-900">
+          {item.title}
+        </h4>
+        <p className="mt-1 text-xs text-slate-500">{item.instructor}</p>
+
+        <div className="mt-2 flex items-center gap-2 text-xs">
+          <span className="rounded-md bg-brand-blue/10 px-1.5 py-0.5 font-semibold text-brand-blue">
+            {item.level}
+          </span>
+          <span className="text-slate-400">{item.duration}</span>
+        </div>
+
+        <p className="mt-2 font-display text-sm font-bold text-slate-900">{item.price}</p>
+
+        <div className="mt-3 flex gap-2">
+          <Button
+            type="button"
+            onClick={() => onViewDetails(item)}
+            variant="subtle"
+            size="sm"
+            className="flex-1"
+          >
+            View Details
+          </Button>
+          <Button href={item.enrollHref} size="sm" className="flex-1">
+            Enroll Now
+          </Button>
         </div>
       </div>
-    </section>
+    </div>
+  );
+}
+
+export function AcademyEcosystem() {
+  const [activeItem, setActiveItem] = useState<CourseCatalogItem | null>(null);
+
+  return (
+    <>
+      <section id="ecosystem" className="scroll-mt-24 bg-frost py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            tone="light"
+            title="Our Learning Ecosystem"
+            subtitle="The Academy is built around live and self-paced learning, organized into three tracks."
+          />
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {academyEcosystem.map(({ id, icon: Icon, title, description, groups }, trackIndex) => {
+              const items = groups.flatMap((group) =>
+                group.items.map((item) => ({
+                  item,
+                  badge: groups.length > 1 ? group.title?.replace(" Live Bootcamp", "") : undefined,
+                }))
+              );
+              const isFeatured = trackIndex === 0;
+
+              return (
+                <div
+                  key={id}
+                  id={id}
+                  className={cn(
+                    "scroll-mt-24 flex flex-col rounded-2xl border p-6",
+                    isFeatured
+                      ? "border-brand-blue/25 bg-linear-to-b from-brand-blue/5 to-transparent shadow-lg shadow-brand-blue/5"
+                      : "border-mist bg-cloud shadow-sm"
+                  )}
+                >
+                  <div className="flex items-start gap-3 lg:min-h-28">
+                    <span
+                      className={cn(
+                        "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl",
+                        isFeatured ? "bg-linear-to-br from-brand-blue to-brand-teal" : "bg-brand-blue/10"
+                      )}
+                    >
+                      <Icon
+                        className={cn("h-5 w-5", isFeatured ? "text-white" : "text-brand-blue")}
+                        strokeWidth={1.75}
+                        aria-hidden
+                      />
+                    </span>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="font-display text-base font-bold text-slate-900">{title}</h3>
+                        {isFeatured ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-linear-to-r from-brand-blue to-brand-teal px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+                            <Flame className="h-3 w-3" aria-hidden />
+                            Most Popular
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="mt-1 text-xs leading-relaxed text-slate-500">{description}</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-4">
+                    {items.map(({ item, badge }, index) => (
+                      <EcosystemCourseCard
+                        key={index}
+                        item={item}
+                        badge={badge}
+                        onViewDetails={setActiveItem}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <Modal
+        open={activeItem !== null}
+        onClose={() => setActiveItem(null)}
+        title={activeItem?.title}
+      >
+        {activeItem ? (
+          <div>
+            <h3 className="pr-8 font-display text-lg font-bold text-slate-900">
+              {activeItem.title}
+            </h3>
+            <p className="mt-1 text-sm text-slate-500">{activeItem.instructor}</p>
+
+            <p className="mt-4 text-sm leading-relaxed text-slate-600">
+              {activeItem.description}
+            </p>
+
+            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+              <span className="rounded-full bg-brand-blue/10 px-2.5 py-1 font-semibold text-brand-blue">
+                {activeItem.level}
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/5 px-2.5 py-1 font-medium text-slate-600">
+                <Clock className="h-3 w-3" aria-hidden />
+                {activeItem.duration}
+              </span>
+            </div>
+
+            <p className="mt-4 font-display text-xl font-bold text-slate-900">
+              {activeItem.price}
+            </p>
+
+            <Button href={activeItem.enrollHref} className="mt-5 w-full">
+              Enroll Now
+            </Button>
+          </div>
+        ) : null}
+      </Modal>
+    </>
   );
 }

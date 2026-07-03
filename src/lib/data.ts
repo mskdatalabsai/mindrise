@@ -13,7 +13,6 @@ import {
   Database,
   Factory,
   FileText,
-  FlaskConical,
   Globe2,
   GraduationCap,
   Hammer,
@@ -27,10 +26,8 @@ import {
   PenTool,
   Phone,
   Presentation,
-  Radio,
   RefreshCw,
   Rocket,
-  Route,
   School,
   Search,
   ShieldCheck,
@@ -50,8 +47,8 @@ import type {
   AudienceSegment,
   ConsultingService,
   ContactChannel,
-  CourseCatalogCategory,
   CourseLevel,
+  EcosystemColumn,
   EcosystemPillar,
   FeatureItem,
   FlagshipProgram,
@@ -341,7 +338,7 @@ export const academyHero = {
     "TheMindRise Academy is a practical AI learning platform designed to help students, professionals, and organizations master Artificial Intelligence through structured learning paths, live bootcamps, hands-on projects, and industry-focused programs.",
     "Whether you're beginning your AI journey or advancing into Generative AI and Agentic AI, we provide the knowledge, practical experience, and guidance needed to thrive in the AI era.",
   ],
-  primaryCta: { label: "Explore Learning Paths", href: "#learning-paths" },
+  primaryCta: { label: "Explore Our Courses", href: "#ecosystem" },
   secondaryCta: { label: "Join a Live Bootcamp", href: "#bootcamps" },
 };
 
@@ -381,59 +378,104 @@ export const academyAudience: AudienceSegment[] = [
   },
 ];
 
-export const academyEcosystem: EcosystemPillar[] = [
+export const academyEcosystem: EcosystemColumn[] = [
   {
     id: "bootcamps",
     icon: Rocket,
-    title: "Live Bootcamps",
+    title: "Live Foundational Bootcamps",
     description:
-      "Interactive instructor-led weekend programs focused on practical implementation.",
-    examples: [
-      "Agentic AI Bootcamp",
-      "Generative AI Bootcamp",
-      "Prompt Engineering Workshop",
-      "AI for Business Leaders",
+      "Interactive instructor-led sessions focused on practical implementation, on the schedule that fits you.",
+    groups: [
+      {
+        title: "Weekend Live Bootcamp",
+        items: [
+          {
+            title: "Weekend Agentic AI Bootcamp",
+            description:
+              "Build and deploy your first AI agent over two weekends, from fundamentals to a working multi-agent workflow.",
+            instructor: "TheMindRise Faculty",
+            duration: "2 Weekends · 12 hrs",
+            level: "Beginner",
+            price: "₹4,999",
+          },
+        ],
+      },
+      {
+        title: "Weekdays Live Bootcamp",
+        items: [
+          {
+            title: "Weekdays Prompt Engineering Bootcamp",
+            description:
+              "A focused weekday sprint on writing production-grade prompts and building reliable LLM workflows.",
+            instructor: "TheMindRise Faculty",
+            duration: "10 Days · 1.5 hrs/day",
+            level: "Beginner",
+            price: "₹5,999",
+          },
+        ],
+      },
     ],
   },
   {
-    id: "self-paced",
+    id: "self-paced-tech",
     icon: BookOpen,
-    title: "Self-Paced Courses",
-    description:
-      "Learn anytime, anywhere through structured online courses with lifetime access.",
-    examples: [
-      "Data to Agentic AI",
-      "AI Foundations",
-      "Machine Learning",
-      "Deep Learning",
-      "Natural Language Processing",
-      "Prompt Engineering",
-      "AI for Pharma",
-      "AI for Banking",
+    title: "Self-Paced Tech Courses",
+    description: "Structured online courses covering core AI and technical skills, available anytime.",
+    groups: [
+      {
+        items: [
+          {
+            title: "AI Foundations for Beginners",
+            description:
+              "Start from zero and build a solid working understanding of AI, Machine Learning, and Generative AI.",
+            instructor: "TheMindRise Faculty",
+            duration: "6 hours",
+            level: "Beginner",
+            price: "₹2,499",
+          },
+          {
+            title: "Machine Learning & Deep Learning Essentials",
+            description:
+              "Hands-on foundations of ML and Deep Learning, with practical projects you can add to your portfolio.",
+            instructor: "TheMindRise Faculty",
+            duration: "10 hours",
+            level: "Intermediate",
+            price: "₹3,499",
+          },
+        ],
+      },
     ],
   },
   {
-    id: "learning-paths",
-    icon: Route,
-    title: "Learning Paths",
+    id: "self-paced-domain",
+    icon: Layers,
+    title: "Self-Paced Domain-Specific Courses",
     description:
-      "Rather than isolated courses, we provide structured learning journeys that progressively build your expertise.",
-    examples: [
-      "Data to Agentic AI Mastery",
-      "AI Engineering Path",
-      "Generative AI Professional",
-      "Agentic AI Developer",
-      "AI for Healthcare & Pharma",
-      "AI for Financial Services",
+      "Industry-focused courses applying AI to specific domains like Healthcare, Banking, and more.",
+    groups: [
+      {
+        items: [
+          {
+            title: "AI for Healthcare & Pharma",
+            description:
+              "Apply AI to clinical analytics, market access, and real-world evidence use cases in Healthcare and Pharma.",
+            instructor: "TheMindRise Faculty",
+            duration: "8 hours",
+            level: "Intermediate",
+            price: "₹3,999",
+          },
+          {
+            title: "AI for Banking & Financial Services",
+            description:
+              "Explore fraud detection, risk analytics, and forecasting use cases built for Banking and Financial Services.",
+            instructor: "TheMindRise Faculty",
+            duration: "8 hours",
+            level: "Intermediate",
+            price: "₹3,999",
+          },
+        ],
+      },
     ],
-  },
-  {
-    id: "projects",
-    icon: FlaskConical,
-    title: "Hands-on Projects",
-    description:
-      "Every learning path includes practical assignments, real-world datasets, case studies, and industry-inspired capstone projects to ensure learners gain practical experience.",
-    examples: [],
   },
 ];
 
@@ -510,49 +552,9 @@ export const academyCta = {
   title: "Your AI Journey Starts Here",
   subtitle:
     "Whether you're exploring AI for the first time or preparing to become an AI leader, TheMindRise Academy provides the knowledge, practical skills, and guidance to help you succeed.",
-  primaryCta: { label: "Browse Courses", href: "/academy/courses" },
+  primaryCta: { label: "Browse Courses", href: "#ecosystem" },
   secondaryCta: { label: "Register for a Live Bootcamp", href: "#bootcamps" },
 };
-
-function buildPlaceholderCourses(prefix: string): CourseCatalogCategory["items"] {
-  return [1, 2, 3].map((n) => ({
-    title: `${prefix} Title Coming Soon ${n}`,
-    description: "Full course details will be added soon.",
-    instructor: "Instructor to be announced",
-    duration: "TBA",
-    level: "All Levels",
-    price: "TBA",
-    detailsHref: "#",
-    demoHref: "#",
-  }));
-}
-
-export const courseCatalog: CourseCatalogCategory[] = [
-  {
-    id: "live-classes",
-    icon: Radio,
-    title: "Live Classes",
-    description:
-      "Instructor-led sessions with real-time interaction, held on a fixed schedule.",
-    items: buildPlaceholderCourses("Live Class"),
-  },
-  {
-    id: "self-paced",
-    icon: BookOpen,
-    title: "Self-Paced",
-    description:
-      "Structured online courses you can complete anytime, at your own pace, with lifetime access.",
-    items: buildPlaceholderCourses("Self-Paced Course"),
-  },
-  {
-    id: "ai-courses",
-    icon: BrainCircuit,
-    title: "AI Courses",
-    description:
-      "Focused programs covering Generative AI, Agentic AI, and other core AI disciplines.",
-    items: buildPlaceholderCourses("AI Course"),
-  },
-];
 
 export const productsHero = {
   title: "Intelligent AI Products Built for the Future",

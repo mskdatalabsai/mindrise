@@ -100,16 +100,19 @@ export interface CourseCatalogItem {
   duration: string;
   level: string;
   price: string;
-  detailsHref: string;
-  demoHref: string;
 }
 
-export interface CourseCatalogCategory {
+export interface EcosystemCourseGroup {
+  title?: string;
+  items: CourseCatalogItem[];
+}
+
+export interface EcosystemColumn {
   id: string;
   icon: LucideIcon;
   title: string;
   description: string;
-  items: CourseCatalogItem[];
+  groups: EcosystemCourseGroup[];
 }
 
 export interface IndustryFocus {

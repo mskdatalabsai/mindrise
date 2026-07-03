@@ -1,9 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Award, Sparkles } from "lucide-react";
+import { Award, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import { heroCertification, siteConfig, badges } from "@/lib/data";
 
 const fadeUp = (delay: number) => ({
@@ -64,18 +63,6 @@ export function Hero() {
 
         <motion.div
           {...fadeUp(0.22)}
-          className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
-        >
-          <Button href="#courses" size="lg" icon={<ArrowRight className="h-4 w-4" />}>
-            Join Weekend Bootcamp
-          </Button>
-          <Button href="#contact" variant="outline" size="lg">
-            Book Consulting
-          </Button>
-        </motion.div>
-
-        <motion.div
-          {...fadeUp(0.26)}
           className="mx-auto mt-10 flex max-w-lg items-center gap-4 rounded-2xl border border-hairline bg-panel-solid/60 p-4 text-left backdrop-blur-sm sm:p-5"
         >
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-brand-teal/30 bg-gradient-to-br from-brand-blue/20 to-brand-teal/20">

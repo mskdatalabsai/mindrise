@@ -3,7 +3,17 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import { navLinks, siteConfig } from "@/lib/data";
+
+function LiveDot() {
+  return (
+    <span className="relative flex h-1.5 w-1.5 shrink-0">
+      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-current opacity-50" />
+      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-current" />
+    </span>
+  );
+}
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +31,7 @@ export function Navbar() {
           {siteConfig.name}
         </Link>
 
-        <ul className="hidden items-center gap-8 lg:flex">
+        <ul className="hidden items-center gap-6 xl:flex">
           {navLinks.map((link) => (
             <li
               key={link.label}
@@ -67,13 +77,20 @@ export function Navbar() {
           ))}
         </ul>
 
+        <div className="hidden xl:block">
+          <Button href="/academy#bootcamps" variant="outline" size="sm" className="gap-2">
+            <LiveDot />
+            Register upcoming live bootcamp
+          </Button>
+        </div>
+
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
           aria-expanded={isOpen}
           aria-controls="mobile-menu"
           aria-label={isOpen ? "Close menu" : "Open menu"}
-          className="inline-flex items-center justify-center rounded-lg p-2 text-fog-100 lg:hidden"
+          className="inline-flex items-center justify-center rounded-lg p-2 text-fog-100 xl:hidden"
         >
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
@@ -82,7 +99,7 @@ export function Navbar() {
       {isOpen ? (
         <div
           id="mobile-menu"
-          className="border-t border-hairline bg-midnight px-4 pb-6 pt-2 lg:hidden"
+          className="border-t border-hairline bg-midnight px-4 pb-6 pt-2 xl:hidden"
         >
           <ul className="flex flex-col">
             {navLinks.map((link) => (
@@ -112,6 +129,15 @@ export function Navbar() {
               </li>
             ))}
           </ul>
+
+          <Button
+            href="/academy#bootcamps"
+            className="mt-5 w-full gap-2"
+            onClick={() => setIsOpen(false)}
+          >
+            <LiveDot />
+            Register upcoming live bootcamp
+          </Button>
         </div>
       ) : null}
     </header>
