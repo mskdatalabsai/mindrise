@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AcademyHero } from "@/components/sections/AcademyHero";
+import { LiveBootcampsBanner } from "@/components/sections/LiveBootcampsBanner";
 import { AcademyAbout } from "@/components/sections/AcademyAbout";
 import { AcademyAudience } from "@/components/sections/AcademyAudience";
 import { AcademyEcosystem } from "@/components/sections/AcademyEcosystem";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
 export default function AcademyPage() {
   return (
     <>
+      <LiveBootcampsBanner compact />
       <AcademyHero />
       <AcademyAbout />
       <AcademyAudience />
