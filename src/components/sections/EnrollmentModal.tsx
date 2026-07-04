@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Loader2, Send } from "lucide-react";
 import { Modal } from "@/components/ui/Modal";
 import { DatePickerField } from "@/components/ui/DatePickerField";
@@ -42,6 +42,13 @@ interface EnrollmentModalProps {
 }
 
 const initialValues = { name: "", phone: "", email: "", message: "" };
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const LEARNING_PLATFORM_URL =
+  process.env.NEXT_PUBLIC_LEARNING_PLATFORM_URL ?? "#";
+
+const REDIRECT_DELAY_MS = 6000;
 
 const inputStyles =
   "w-full rounded-xl border border-mist bg-cloud px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition-colors focus:border-brand-blue/60 focus:outline-none focus:ring-2 focus:ring-brand-blue/15";
@@ -86,6 +93,16 @@ export function EnrollmentModal({
 
   const isSubmitting = state.status === "submitting";
 
+  useEffect(() => {
+    if (state.status !== "success") return;
+
+    const timer = setTimeout(() => {
+      window.location.href = LEARNING_PLATFORM_URL;
+    }, REDIRECT_DELAY_MS);
+
+    return () => clearTimeout(timer);
+  }, [state.status]);
+
   function reset() {
     setValues(initialValues);
     setSelectedDate(null);
@@ -110,14 +127,17 @@ export function EnrollmentModal({
         throw new Error(verifyData.message ?? "Payment verification failed.");
       }
 
-      await fetch("/api/contact", {
+      await fetch("/api/enrollment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: values.name,
           email: values.email,
-          subject: `Enrollment payment received: ${courseTitle}`,
-          message: `Phone: ${values.phone}\nPreferred date: ${formatDate(confirmedDate)}\nPayment ID: ${payment.razorpay_payment_id}\n\n${values.message}`,
+          phone: values.phone,
+          courseTitle,
+          preferredDate: formatDate(confirmedDate),
+          paymentId: payment.razorpay_payment_id,
+          message: values.message,
         }),
       });
 
@@ -135,6 +155,20 @@ export function EnrollmentModal({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const trimmedName = values.name.trim();
+    const trimmedEmail = values.email.trim();
+    const trimmedPhone = values.phone.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedPhone) {
+      setState({ status: "error", message: "Name, email, and phone number are required." });
+      return;
+    }
+
+    if (!EMAIL_REGEX.test(trimmedEmail)) {
+      setState({ status: "error", message: "Please enter a valid email address." });
+      return;
+    }
 
     if (!selectedDate) {
       setState({ status: "error", message: "Please select a preferred date." });
@@ -177,7 +211,7 @@ export function EnrollmentModal({
         name: "TheMindRise.ai",
         description: courseTitle,
         order_id: orderData.orderId,
-        prefill: { name: values.name, email: values.email, contact: values.phone },
+        prefill: { name: trimmedName, email: trimmedEmail, contact: trimmedPhone },
         theme: { color: "#4f6ef7" },
         handler: (response) => {
           void finalizeEnrollment(response, selectedDate);
@@ -205,17 +239,20 @@ export function EnrollmentModal({
         <div className="py-4 text-center">
           <p className="font-display text-lg font-bold text-slate-900">Payment successful</p>
           <p className="mt-2 text-sm text-slate-500">
-            You&rsquo;re enrolled in {courseTitle} — a confirmation for{" "}
-            {selectedDate ? formatDate(selectedDate) : "your selected date"} will be sent to your
-            email shortly.
+            You&rsquo;re registered for {courseTitle} on{" "}
+            {selectedDate ? formatDate(selectedDate) : "your selected date"}. A confirmation
+            email is on its way — your Zoom link and joining instructions will be sent to your
+            email one day before the session.
           </p>
-          <button
-            type="button"
-            onClick={handleClose}
-            className="mt-5 text-sm font-medium text-brand-blue hover:underline"
+          <p className="mt-4 text-sm text-slate-500">
+            Taking you to the learning platform now…
+          </p>
+          <a
+            href={LEARNING_PLATFORM_URL}
+            className="mt-5 inline-block text-sm font-medium text-brand-blue hover:underline"
           >
-            Close
-          </button>
+            Continue now
+          </a>
         </div>
       ) : (
         <form onSubmit={handleSubmit} noValidate>
