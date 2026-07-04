@@ -5,17 +5,32 @@ import { Clock, Flame, ImagePlay } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
+import type { CalendarMode } from "@/components/ui/Calendar";
+import { EnrollmentModal } from "@/components/sections/EnrollmentModal";
 import { cn } from "@/lib/utils";
 import { academyEcosystem } from "@/lib/data";
 import type { CourseCatalogItem } from "@/types";
 
+interface CardContext {
+  item: CourseCatalogItem;
+  mode: CalendarMode;
+}
+
 interface EcosystemCourseCardProps {
   item: CourseCatalogItem;
   badge?: string;
-  onViewDetails: (item: CourseCatalogItem) => void;
+  mode: CalendarMode;
+  onViewDetails: (context: CardContext) => void;
+  onEnroll: (context: CardContext) => void;
 }
 
-function EcosystemCourseCard({ item, badge, onViewDetails }: EcosystemCourseCardProps) {
+function EcosystemCourseCard({
+  item,
+  badge,
+  mode,
+  onViewDetails,
+  onEnroll,
+}: EcosystemCourseCardProps) {
   return (
     <div className="overflow-hidden rounded-2xl border border-mist bg-cloud shadow-sm transition-shadow hover:shadow-lg">
       <div className="relative flex aspect-video flex-col items-center justify-center gap-1.5 border-b border-dashed border-mist bg-frost">
@@ -49,14 +64,19 @@ function EcosystemCourseCard({ item, badge, onViewDetails }: EcosystemCourseCard
         <div className="mt-3 flex gap-2">
           <Button
             type="button"
-            onClick={() => onViewDetails(item)}
+            onClick={() => onViewDetails({ item, mode })}
             variant="subtle"
             size="sm"
             className="flex-1"
           >
             View Details
           </Button>
-          <Button href={item.enrollHref} size="sm" className="flex-1">
+          <Button
+            type="button"
+            onClick={() => onEnroll({ item, mode })}
+            size="sm"
+            className="flex-1"
+          >
             Enroll Now
           </Button>
         </div>
@@ -66,7 +86,13 @@ function EcosystemCourseCard({ item, badge, onViewDetails }: EcosystemCourseCard
 }
 
 export function AcademyEcosystem() {
-  const [activeItem, setActiveItem] = useState<CourseCatalogItem | null>(null);
+  const [activeCard, setActiveCard] = useState<CardContext | null>(null);
+  const [enrollCard, setEnrollCard] = useState<CardContext | null>(null);
+
+  function handleEnroll(context: CardContext) {
+    setActiveCard(null);
+    setEnrollCard(context);
+  }
 
   return (
     <>
@@ -80,12 +106,12 @@ export function AcademyEcosystem() {
 
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {academyEcosystem.map(({ id, icon: Icon, title, description, groups }, trackIndex) => {
-              const items = groups.flatMap((group) =>
-                group.items.map((item) => ({
-                  item,
-                  badge: groups.length > 1 ? group.title?.replace(" Live Bootcamp", "") : undefined,
-                }))
-              );
+              const items = groups.flatMap((group) => {
+                const badge = groups.length > 1 ? group.title?.replace(" Live Bootcamp", "") : undefined;
+                const mode: CalendarMode =
+                  badge === "Weekend" ? "weekend" : badge === "Weekdays" ? "weekday" : "any";
+                return group.items.map((item) => ({ item, badge, mode }));
+              });
               const isFeatured = trackIndex === 0;
 
               return (
@@ -127,12 +153,14 @@ export function AcademyEcosystem() {
                   </div>
 
                   <div className="mt-5 flex flex-col gap-4">
-                    {items.map(({ item, badge }, index) => (
+                    {items.map(({ item, badge, mode }, index) => (
                       <EcosystemCourseCard
                         key={index}
                         item={item}
                         badge={badge}
-                        onViewDetails={setActiveItem}
+                        mode={mode}
+                        onViewDetails={setActiveCard}
+                        onEnroll={handleEnroll}
                       />
                     ))}
                   </div>
@@ -144,41 +172,53 @@ export function AcademyEcosystem() {
       </section>
 
       <Modal
-        open={activeItem !== null}
-        onClose={() => setActiveItem(null)}
-        title={activeItem?.title}
+        open={activeCard !== null}
+        onClose={() => setActiveCard(null)}
+        title={activeCard?.item.title}
       >
-        {activeItem ? (
+        {activeCard ? (
           <div>
             <h3 className="pr-8 font-display text-lg font-bold text-slate-900">
-              {activeItem.title}
+              {activeCard.item.title}
             </h3>
-            <p className="mt-1 text-sm text-slate-500">{activeItem.instructor}</p>
+            <p className="mt-1 text-sm text-slate-500">{activeCard.item.instructor}</p>
 
             <p className="mt-4 text-sm leading-relaxed text-slate-600">
-              {activeItem.description}
+              {activeCard.item.description}
             </p>
 
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
               <span className="rounded-full bg-brand-blue/10 px-2.5 py-1 font-semibold text-brand-blue">
-                {activeItem.level}
+                {activeCard.item.level}
               </span>
               <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/5 px-2.5 py-1 font-medium text-slate-600">
                 <Clock className="h-3 w-3" aria-hidden />
-                {activeItem.duration}
+                {activeCard.item.duration}
               </span>
             </div>
 
             <p className="mt-4 font-display text-xl font-bold text-slate-900">
-              {activeItem.price}
+              {activeCard.item.price}
             </p>
 
-            <Button href={activeItem.enrollHref} className="mt-5 w-full">
+            <Button
+              type="button"
+              onClick={() => handleEnroll(activeCard)}
+              className="mt-5 w-full"
+            >
               Enroll Now
             </Button>
           </div>
         ) : null}
       </Modal>
+
+      <EnrollmentModal
+        open={enrollCard !== null}
+        onClose={() => setEnrollCard(null)}
+        courseTitle={enrollCard?.item.title ?? ""}
+        coursePrice={enrollCard?.item.price ?? ""}
+        scheduleMode={enrollCard?.mode ?? "any"}
+      />
     </>
   );
 }

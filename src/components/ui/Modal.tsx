@@ -1,27 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+import { useTopmostEscape } from "@/lib/useTopmostEscape";
 
 interface ModalProps {
   open: boolean;
   onClose: () => void;
   title?: string;
   children: ReactNode;
+  className?: string;
 }
 
-export function Modal({ open, onClose, title, children }: ModalProps) {
-  useEffect(() => {
-    if (!open) return;
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open, onClose]);
+export function Modal({ open, onClose, title, children, className }: ModalProps) {
+  useTopmostEscape(open, onClose);
 
   if (!open) return null;
 
@@ -36,7 +29,10 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl border border-mist bg-cloud p-6 shadow-2xl"
+        className={cn(
+          "relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl border border-mist bg-cloud p-6 shadow-2xl",
+          className
+        )}
       >
         <button
           type="button"
